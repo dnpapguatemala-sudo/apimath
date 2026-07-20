@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdriMat - Aprendizaje Matemático</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- 1. PANTALLA DE PERFILES -->
+    <section id="pantalla-perfiles" class="pantalla">
+        <div class="contenedor-bloque-perfiles" style="max-width: 900px; margin: 40px auto; padding: 20px; text-align: center;">
+            <h2 class="titulo-perfiles" style="font-size: 2.5rem; color: #1A365D; margin-bottom: 30px; font-weight: bold;">¿Quién va a jugar hoy?</h2>
+            
+            <div class="fila-perfiles-grid" style="display: flex; gap: 25px; justify-content: center; align-items: stretch; flex-wrap: wrap; padding: 10px;">
+                
+                <div class="bloque-tarjeta-individual" onclick="seleccionarPerfil('chico_4')" style="background: white; border: 2px solid #E2E8F0; border-radius: 24px; padding: 30px 20px; width: 220px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.02); text-align: center;">
+                    <div class="circulo-avatar color-azul-exp" style="background-color: #3498DB; width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; margin: 0 auto 20px auto; box-shadow: 0 8px 15px rgba(52,152,219,0.2);">👦</div>
+                    <h3 style="font-size: 1.6rem; color: #1A365D; margin: 10px 0 5px 0; font-weight: bold;">Explorador</h3>
+                    <p style="font-size: 1.1rem; color: #64748B; margin: 0;">4 años</p>
+                </div>
+
+                <div class="bloque-tarjeta-individual" onclick="seleccionarPerfil('niña_8')" style="background: white; border: 2px solid #E2E8F0; border-radius: 24px; padding: 30px 20px; width: 220px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.02); text-align: center;">
+                    <div class="circulo-avatar color-verde-cam" style="background-color: #2ECC71; width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; margin: 0 auto 20px auto; box-shadow: 0 8px 15px rgba(46,204,113,0.2);">👧</div>
+                    <h3 style="font-size: 1.6rem; color: #1A365D; margin: 10px 0 5px 0; font-weight: bold;">Campeón</h3>
+                    <p style="font-size: 1.1rem; color: #64748B; margin: 0;">8 años</p>
+                </div>
+
+                <div class="bloque-tarjeta-individual" style="background: white; border: 2px solid #E2E8F0; border-radius: 24px; padding: 30px 20px; width: 220px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center;">
+                    <div onclick="seleccionarPerfil('chico_12')" style="cursor: pointer; width: 100%;">
+                        <div class="circulo-avatar color-morado-tit" style="background-color: #9B59B6; width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; margin: 0 auto 20px auto; box-shadow: 0 8px 15px rgba(155,89,182,0.2);">⚡</div>
+                        <h3 style="font-size: 1.6rem; color: #1A365D; margin: 10px 0 5px 0; font-weight: bold;">Titán</h3>
+                        <p style="font-size: 1.1rem; color: #64748B; margin: 0;">12 años</p>
+                    </div>
+                    <button onclick="irATiendaDirecto(event)" style="background: linear-gradient(135deg, #1A365D, #2B6CB0); color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; cursor: pointer; text-transform: uppercase; margin-top: 20px; width: 90%; box-shadow: 0 4px 10px rgba(26,54,93,0.2);">⚽ Store</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. PANTALLA DE JUEGO (CORREGIDA Y SIN DUPLICADOS) -->
+    <section id="pantalla-juego" class="pantalla ocultar">
+        
+        <!-- BARRA SUPERIOR CON CONTROLES, TIEMPO, VIDAS Y EXPERIENCIA -->
+        <div class="barra-superior" style="display: flex; justify-content: space-between; align-items: center; max-width: 850px; margin: 0 auto; padding: 15px 20px; background: rgba(255, 255, 255, 0.1); border-radius: 15px; backdrop-filter: blur(5px); margin-bottom: 20px; gap: 10px;">
+            <button class="btn-volver" onclick="volverAMenu()" style="background: #E2E8F0; color: #1A365D; border: none; padding: 8px 15px; border-radius: 10px; font-weight: bold; cursor: pointer;">⬅ Volver</button>
+            
+            <!-- MARCADOR DE VIDAS -->
+            <div class="marcador-vidas" style="background: white; padding: 5px 15px; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); font-size: 1.2rem;">
+                <span id="corazones">❤️❤️❤️</span>
+            </div>
+
+            <!-- RELOJ DE PARTIDO REFORZADO -->
+            <div id="marcador-tiempo" style="background: #E74C3C; color: white; padding: 6px 18px; border-radius: 20px; font-weight: bold; box-shadow: 0 4px 10px rgba(231,76,60,0.3); font-size: 0.95rem; display: flex; align-items: center; gap: 5px; min-width: 190px; justify-content: center;">
+                ⏱️ Partido: <span id="tiempo-restante">40:00</span>
+            </div>
+            
+            <!-- MARCADOR DE EXPERIENCIA -->
+            <div class="marcador-xp" style="background: #F59E0B; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; box-shadow: 0 4px 10px rgba(245,158,11,0.3);">
+                ⭐ XP: <span id="puntos-xp">0</span>
+            </div>
+        </div>
+
+        <!-- BARRA DE AVANCE ÚNICA (INDICADOR DE PROGRESO) -->
+        <div class="contenedor-progreso" style="max-width: 600px; margin: 20px auto 10px auto; background: #E2E8F0; border-radius: 20px; height: 25px; position: relative; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); border: 2px solid white;">
+            <div id="barra-progreso-llenado" class="progreso-relleno" style="width: 0%; height: 100%; background: linear-gradient(90deg, #2ECC71, #27AE60); transition: width 0.4s ease-in-out; border-radius: 20px;"></div>
+            <span id="texto-progreso" style="position: absolute; width: 100%; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: bold; color: #1A365D; font-size: 0.9rem; text-shadow: 0 1px 0 rgba(255,255,255,0.6);">Reto: 0 / 10</span>
+        </div>
+
+        <!-- SECCIÓN DE RECOMPENSAS LIMPIA (ESTRELLAS Y COFRE DEL TESORO) -->
+        <div id="contenedor-recompensas-limpio" style="display: flex; justify-content: center; align-items: center; gap: 30px; margin: 15px auto 30px auto; max-width: 600px; padding: 10px; background: rgba(255, 255, 255, 0.5); border-radius: 15px;">
+            <div style="font-size: 1.2rem; font-weight: bold; color: #1A365D;">
+                Estrellas: <span id="contador-estrellas-juego" style="letter-spacing: 2px;">Ninguna</span>
+            </div>
+
+            <div id="caja-tesoro" style="display: flex; align-items: center; gap: 8px; font-size: 1.2rem; font-weight: bold; color: #1A365D; background: white; padding: 5px 15px; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                📦 Cofre: <span id="monedas-tesoro">0</span> 🪙
+            </div>
+        </div>
+
+        <!-- ÁREA DE TRABAJO -->
+        <div id="area-de-trabajo" class="layout-estandar">
+            
+            <div id="feedback-visual" class="feedback-contenedor ocultar">
+                <span id="feedback-icono">✅</span>
+                <p id="feedback-texto">¡Excelente!</p>
+                <span id="feedback-subtexto">+10 XP</span>
+            </div>
+
+            <div id="contenedor-pablobot" class="pablobot-box">
+                <div id="pablobot-avatar" class="pablobot-neutral">🤖</div>
+                <div id="pablobot-dialogo" class="pablobot-burbuja">¡Hola! Vamos a resolver esto juntos.</div>
+            </div>
+            
+            <div class="zona-pregunta">
+                <div id="bloque-concreto" class="bloque-manzanas ocultar"></div> 
+                
+                <div id="tarjeta-matematica" class="tarjeta-blanca">
+                    <span id="num1">0</span>
+                    <span id="operador">+</span>
+                    <span id="num2">0</span>
+                    <hr>
+                    <input type="number" id="respuesta-usuario" placeholder="?">
+                </div>
+            </div>
+
+            <div class="zona-controles">
+                <div id="opciones-multiples" class="contenedor-opciones ocultar"></div>
+                <button id="btn-siguiente" class="btn-verde" onclick="verificarRespuesta()">Siguiente ></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. PANTALLA DE VICTORIA -->
+    <section id="pantalla-victoria" class="pantalla ocultar">
+        <div class="celebracion-contenido">
+            <div style="font-size: 5rem; animation: bounce 1s infinite alternate;">🏆✨</div>
+            <h1 style="margin: 20px 0 10px 0;">¡Racha Completada!</h1>
+            <p style="font-size: 1.3rem; color: #64748B; margin-bottom: 30px;">¡Increíble trabajo! Resolviste los 10 retos con éxito.</p>
+            
+            <div class="tarjeta-blanca" style="font-size: 2rem; width: auto; padding: 20px 40px; margin-bottom: 30px; align-items: center;">
+                <span style="color: #F59E0B; font-weight: bold;">⭐ ¡Ganaste una Medalla! ⭐</span>
+                <div id="xp-ganados-final" style="font-size: 1.3rem; color: #2ECC71; margin-top: 10px;">+100 XP Totales</div>
+            </div>
+
+            <button class="btn-verde" onclick="volverAMenu()">¡A jugar otra vez!</button>
+        </div>
+    </section>
+
+    <!-- 4. PANTALLA DE TIENDA -->
+    <section id="pantalla-tienda" class="pantalla ocultar">
+        <div style="background: white; max-width: 500px; margin: 30px auto; padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.05);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <button class="btn-volver" onclick="volverAMenu()" style="padding: 8px 15px;">⬅ Menú</button>
+                <h2 style="color: #1A365D; margin: 0;">⚽ Fútbol Store</h2>
+                <div style="font-size: 1.2rem; font-weight: bold; color: #F59E0B;">🪙 <span id="monedas-tienda">0</span></div>
+            </div>
+            <p style="color: #64748B; margin-bottom: 25px;">¡Usa tus monedas ganadas para coleccionar balones!</p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <div style="border: 2px solid #E2E8F0; padding: 15px; border-radius: 15px; width: 120px;">
+                    <div style="font-size: 2.5rem; margin-bottom: 5px;">⚽</div>
+                    <h4 style="margin: 5px 0;">Clásico</h4>
+                    <button id="btn-compra-0" onclick="comprarBalon(0)" style="background: #2ECC71; color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%;">🪙 100</button>
+                </div>
+                <div style="border: 2px solid #E2E8F0; padding: 15px; border-radius: 15px; width: 120px;">
+                    <div style="font-size: 2.5rem; margin-bottom: 5px;">🪐</div>
+                    <h4 style="margin: 5px 0;">Cyber</h4>
+                    <button id="btn-compra-1" onclick="comprarBalon(1)" style="background: #2ECC71; color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%;">🪙 300</button>
+                </div>
+                <div style="border: 2px solid #E2E8F0; padding: 15px; border-radius: 15px; width: 120px;">
+                    <div style="font-size: 2.5rem; margin-bottom: 5px;">🏆</div>
+                    <h4 style="margin: 5px 0;">Oro</h4>
+                    <button id="btn-compra-2" onclick="comprarBalon(2)" style="background: #2ECC71; color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%;">🪙 600</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CARGA DE SCRIPTS -->
+    <script src="js/mathLogic.js"></script>
+    <script src="js/engine.js"></script>
+</body>
+</html>
